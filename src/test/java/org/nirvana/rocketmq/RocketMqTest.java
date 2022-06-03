@@ -1,6 +1,6 @@
-package org.nirvana.rocketmq.simple.sync;
+package org.nirvana.rocketmq;
 
-
+import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.client.producer.SendCallback;
@@ -8,18 +8,31 @@ import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.remoting.common.RemotingHelper;
 import org.apache.rocketmq.remoting.exception.RemotingException;
+import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
 
-/**
- * @author gzm
- * @date 2021/3/12 10:47 上午
- * @desc: 异步发送消息的处理方案
- */
-public class AsyncProducer {
-    static String namesrAddr = "";
+public class RocketMqTest {
 
-    public static void main(String[] args) throws MQClientException, UnsupportedEncodingException, RemotingException, InterruptedException {
+    static String namesrAddr = "node1:9876";
+
+    @Test
+    public void testSync() throws MQClientException, MQBrokerException, RemotingException, InterruptedException, UnsupportedEncodingException {
+        DefaultMQProducer producer = new DefaultMQProducer("simple_sync_group_name");
+        // producer.setVipChannelEnabled(false);
+        producer.setNamesrvAddr(namesrAddr);
+        producer.start();
+
+        String topicName = "simple_sync_topic";
+        Message msg = new Message(topicName, "hello word".getBytes(RemotingHelper.DEFAULT_CHARSET));
+        SendResult result = producer.send(msg);
+        System.out.println("result: " + result);
+
+        producer.shutdown();
+    }
+
+    @Test
+    public void testAsync() throws MQClientException, UnsupportedEncodingException, RemotingException, InterruptedException {
         DefaultMQProducer producer = new DefaultMQProducer("simple_sync_producer_group_name");
         producer.setNamesrvAddr(namesrAddr);
         producer.start();
