@@ -1,6 +1,7 @@
 package org.nirvana.pulsar.controller;
 
 import io.github.majusko.pulsar.producer.PulsarTemplate;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.pulsar.client.api.MessageId;
 import org.apache.pulsar.client.api.PulsarClientException;
@@ -16,6 +17,7 @@ import java.security.MessageDigest;
 /**
  * @author Nirvana
  */
+@Slf4j
 @RestController
 public class PulsarProducerController {
 

@@ -17,12 +17,22 @@ public class PulsarConfig {
 
   @Bean
   public ProducerFactory producerFactory() {
-    List<String> allTopics = getAllTopics(PulsarTopic.class);
-
     ProducerFactory producerFactory = new ProducerFactory();
-    for (String topic : allTopics) {
-      producerFactory.addProducer(topic);
-    }
+
+    // springboot pulsar 的版本为1.1.2 的时候使用这部分代码
+    // --------------------------------------------------------------------------------------------------------------------
+//    List<String> allTopics = getAllTopics(PulsarTopic.class);
+//    for (String topic : allTopics) {
+//      producerFactory.addProducer(topic, String.class);
+//    }
+    producerFactory.addProducer(PulsarTopic.MY_TOPIC, byte[].class);
+    producerFactory.addProducer(PulsarTopic.STR_TOPIC, String.class);
+    // --------------------------------------------------------------------------------------------------------------------
+
+    // springboot pulsar 的版本为1.0.1 的时候使用这部分代码
+    // --------------------------------------------------------------------------------------------------------------------
+//    producerFactory.addProducer(PulsarTopic.STR_TOPIC, String.class);
+    // --------------------------------------------------------------------------------------------------------------------
 
     return producerFactory;
   }

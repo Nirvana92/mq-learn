@@ -42,6 +42,10 @@ pulsar 通过springboot 接入
   <version>1.1.2</version>
 </dependency>
 ```
+
+注意: 这里的版本如果是1.1.2, 在消费端会报错. 
+版本修改为 1.0.1, 可以正常消费.
+
 2. 定义pulsar的生产者
 参考: org.nirvana.pulsar.config.PulsarConfig
 

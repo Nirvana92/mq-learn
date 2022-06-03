@@ -19,7 +19,7 @@ public class ByteArrayConsumer {
    * clazz 写入的是String类型, 报错: Received error from server: Topic does not have schema to check
    * @param message 消息内容
    */
-  @PulsarConsumer(topic = PulsarTopic.MY_TOPIC)
+  @PulsarConsumer(topic = PulsarTopic.MY_TOPIC, clazz = byte[].class)
   public void consume(byte[] message) {
     String msg = new String(message, StandardCharsets.UTF_8);
     log.info("threadName: {}, Received message: {}", Thread.currentThread().getName(), msg);
