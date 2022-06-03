@@ -30,3 +30,45 @@ log.retention.hours: 168[7天]. 日志保留的时长[hours].
 
 ### RocketMq
 
+
+### pulsar 
+
+pulsar 通过springboot 接入
+1. 引入依赖
+```xml
+<dependency>
+  <groupId>io.github.majusko</groupId>
+  <artifactId>pulsar-java-spring-boot-starter</artifactId>
+  <version>1.1.2</version>
+</dependency>
+```
+2. 定义pulsar的生产者
+参考: org.nirvana.pulsar.config.PulsarConfig
+
+3. 配置文件中配置pulsar 的brokers的地址
+```properties
+pulsar.service-url=pulsar://localhost:6650
+```
+
+备注(pulsar 默认的配置, 参考: https://github.com/majusko/pulsar-java-spring-boot-starter): 
+````properties
+#PulsarClient
+pulsar.service-url=pulsar://localhost:6650
+pulsar.io-threads=10
+pulsar.listener-threads=10
+pulsar.enable-tcp-no-delay=false
+pulsar.keep-alive-interval-sec=20
+pulsar.connection-timeout-sec=10
+pulsar.operation-timeout-sec=15
+pulsar.starting-backoff-interval-ms=100
+pulsar.max-backoff-interval-sec=10
+pulsar.consumer-name-delimiter=
+pulsar.namespace=default
+pulsar.tenant=public
+pulsar.auto-start=true
+pulsar.allow-interceptor=false
+
+#Consumer
+pulsar.consumer.default.dead-letter-policy-max-redeliver-count=-1
+pulsar.consumer.default.ack-timeout-ms=3000
+````

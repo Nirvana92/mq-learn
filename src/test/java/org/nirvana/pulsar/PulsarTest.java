@@ -13,6 +13,9 @@ import org.apache.pulsar.shade.org.checkerframework.checker.index.qual.SameLen;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.nirvana.pulsar.config.PulsarTopic;
+
+import java.lang.reflect.Field;
 
 @Slf4j
 public class PulsarTest {
@@ -30,8 +33,7 @@ public class PulsarTest {
   @Test
   public void testProducer() throws PulsarClientException {
     String topic = "my-topic";
-    Producer<byte[]> producer = client.newProducer()
-            .topic(topic).create();
+    Producer<byte[]> producer = client.newProducer().topic(topic).create();
 
     MessageId send = producer.send("hello world".getBytes());
     log.info("send message id: {}", send);
@@ -41,12 +43,21 @@ public class PulsarTest {
   public void testConsumer() throws PulsarClientException {
     String topic = "my-topic";
     String consumerName = "first-consumer";
-    Consumer<byte[]> consumer = client.newConsumer().topic(topic)
-            .subscriptionName(consumerName)
-            .subscribe();
+    Consumer<byte[]> consumer =
+        client.newConsumer().topic(topic).subscriptionName(consumerName).subscribe();
     // 这里是非阻塞的, 只要有一个消息过来程序就会终止
     Message<byte[]> message = consumer.receive();
     log.info("Received message: {}", new String(message.getData()));
+  }
+
+  @Test
+  public void testClassField() throws IllegalAccessException {
+    Field[] fields = PulsarTopic.class.getFields();
+    for (Field field : fields) {
+      log.info("field name: {}", field.getName());
+      Object val = field.get(PulsarTopic.class);
+      log.info("field value: {}", val);
+    }
   }
 
   @After
