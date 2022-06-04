@@ -1,6 +1,7 @@
 package org.nirvana.pulsar;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.pulsar.client.api.Consumer;
 import org.apache.pulsar.client.api.ConsumerBuilder;
 import org.apache.pulsar.client.api.Message;
@@ -13,9 +14,11 @@ import org.apache.pulsar.shade.org.checkerframework.checker.index.qual.SameLen;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.nirvana.pulsar.config.PulsarConfig;
 import org.nirvana.pulsar.config.PulsarTopic;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 @Slf4j
 public class PulsarTest {
@@ -58,6 +61,13 @@ public class PulsarTest {
       Object val = field.get(PulsarTopic.class);
       log.info("field value: {}", val);
     }
+  }
+
+  @Test
+  public void testGetAllTopics() {
+    PulsarConfig pulsarConfig = new PulsarConfig();
+    List<Pair<String, Class<?>>> allTopics = pulsarConfig.getAllTopics(PulsarTopic.class);
+    System.out.println(allTopics);
   }
 
   @After
