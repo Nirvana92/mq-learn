@@ -28,10 +28,19 @@ public class ByteArrayConsumer {
       topic = PulsarTopic.MY_TOPIC,
       initialPosition = SubscriptionInitialPosition.Earliest)
   public void consume(byte[] message) {
-    executorService.execute(
-        () -> {
-          String msg = new String(message, StandardCharsets.UTF_8);
-          log.info("threadName: {}, Received message: {}", Thread.currentThread().getName(), msg);
-        });
+//    executorService.execute(
+//        () -> {
+//          String msg = new String(message, StandardCharsets.UTF_8);
+//          log.info("threadName: {}, Received message: {}", Thread.currentThread().getName(), msg);
+//        });
+
+      String msg = new String(message, StandardCharsets.UTF_8);
+      log.info("sleep before threadName: {}, Received message: {}", Thread.currentThread().getName(), msg);
+      try {
+          Thread.sleep(10000);
+      } catch (InterruptedException e) {
+          throw new RuntimeException(e);
+      }
+      log.info("sleep after threadName: {}, Received message: {}", Thread.currentThread().getName(), msg);
   }
 }
