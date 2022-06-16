@@ -24,9 +24,9 @@ public class ByteArrayConsumer {
    *
    * @param message 消息内容
    */
-  @PulsarConsumer(
-      topic = PulsarTopic.MY_TOPIC,
-      initialPosition = SubscriptionInitialPosition.Earliest)
+//  @PulsarConsumer(
+//      topic = PulsarTopic.MY_TOPIC,
+//      initialPosition = SubscriptionInitialPosition.Earliest)
   public void consume(byte[] message) {
 //    executorService.execute(
 //        () -> {

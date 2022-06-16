@@ -58,7 +58,7 @@ public class PulsarTest {
      */
     @Test
     public void testProducerSync() throws PulsarClientException {
-        int times = 10;
+        int times = 100;
         String topic = "my-topic";
         producer = client.newProducer().topic(topic).create();
         for (int i = 0; i < times; i++) {
