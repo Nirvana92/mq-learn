@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 
 @Slf4j
 @SpringBootApplication
@@ -23,4 +25,10 @@ public class MqApplication implements CommandLineRunner {
         customConsumer.subscribe();
         log.info("customConsumer.subscribe()");
     }
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void init() {
+        log.info("==================== ApplicationReadyEvent");
+    }
+
 }
